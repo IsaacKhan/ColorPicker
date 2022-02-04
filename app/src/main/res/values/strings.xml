@@ -1,0 +1,8 @@
+<resources>
+    <!-- Basic App Strings -->
+    <string name="app_name">ColorPicker</string>
+
+    <!-- Color Picker Content View -->
+    <string name="COLOR_PICKER_TITLE">Select Chat Color</string>
+    <string name="SAVE_COLOR">Save Chat Color</string>
+</resources>
