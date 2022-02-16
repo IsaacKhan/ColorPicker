@@ -5,4 +5,5 @@
     <!-- Color Picker Content View -->
     <string name="COLOR_PICKER_TITLE">Select Chat Color</string>
     <string name="SAVE_COLOR">Save Chat Color</string>
+    <string name="color_picker_preferences">Color_Picker_Preferences</string>
 </resources>

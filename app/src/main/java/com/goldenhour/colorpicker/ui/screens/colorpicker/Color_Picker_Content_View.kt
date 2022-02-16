@@ -17,21 +17,17 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -39,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.navigation.NavHostController
 import com.goldenhour.colorpicker.R
 import com.goldenhour.colorpicker.extensions.parse
 import com.goldenhour.colorpicker.ui.screens.colorpicker.COLOR_PICKER_DATA_PROVIDER
@@ -61,7 +56,7 @@ import kotlinx.coroutines.launch
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVIDER){
+fun Color_Picker_Content_View(color_picker_view_model: COLOR_PICKER_DATA_PROVIDER) {
     val viewModel = remember { color_picker_view_model }
     val color by remember(viewModel) { viewModel.colorToDisplay }.collectAsState()
 
@@ -79,40 +74,6 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         backgroundColor = Color.Black,
-        topBar = {
-            TopAppBar(
-                backgroundColor = Color.Black,
-            ) {
-                IconButton(
-                    onClick = {  },
-                    modifier = Modifier.weight(.5f, true)
-                ) {
-                    Row {
-                        Icon(
-                            Icons.Outlined.KeyboardArrowLeft,
-                            contentDescription = "",
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                            tint = Color.White,
-                        )
-                        Text(
-                            text = "Back",
-                            style = MaterialTheme.typography.body2,
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            fontStyle = FontStyle.Italic,
-                            fontWeight = FontWeight.Normal,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
-                    }
-                }
-                Spacer(
-                    modifier = Modifier.weight(1f, true)
-                )
-                Spacer(
-                    modifier = Modifier.weight(.5f, true)
-                )
-            }
-        },
         content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -123,9 +84,10 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
                     modifier = Modifier.weight(.5f, true),
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     // title
                     Text(
+                        modifier = Modifier.padding(top = 24.dp),
                         text = stringResource(id = R.string.COLOR_PICKER_TITLE),
                         fontSize = 24.sp,
                         color = MaterialTheme.colors.primaryVariant
@@ -136,7 +98,7 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
                     modifier = Modifier.weight(1f, true),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     // Color Picker
                     OutlinedButton(
                         onClick = {
@@ -146,17 +108,20 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
                                 else bottomSheetScaffoldState.bottomSheetState.collapse()
                             }
                         },
-                        modifier= Modifier.wrapContentHeight(),
+                        modifier = Modifier.wrapContentHeight(),
                         shape = CircleShape,
                         contentPadding = PaddingValues(10.dp),  //avoid the little icon
-                        border = BorderStroke(width = 14.dp, brush = Brush.sweepGradient(colors = rainbow))
+                        border = BorderStroke(
+                            width = 14.dp,
+                            brush = Brush.sweepGradient(colors = rainbow)
+                        )
                     ) {
                         Box(
                             modifier = Modifier
                                 .size(200.dp)
                                 .background(color = Color.Black, shape = CircleShape),
                             contentAlignment = Alignment.Center
-                        ){
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(160.dp)
@@ -170,7 +135,7 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
                     modifier = Modifier.weight(.75f, true),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     // save button
                     FloatingActionButton(
                         onClick = { },
@@ -187,9 +152,9 @@ fun Color_Picker_Content_View (color_picker_view_model: COLOR_PICKER_DATA_PROVID
                             color = Color.White,
                             style = MaterialTheme.typography.body1,
                             fontStyle = FontStyle.Italic,
-                            modifier = Modifier.
-                            padding(15.dp, 0.dp, 15.dp, 0.dp),
-                            fontSize = 15.sp)
+                            modifier = Modifier.padding(15.dp, 0.dp, 15.dp, 0.dp),
+                            fontSize = 15.sp
+                        )
                     }
                 }
             }
@@ -224,7 +189,7 @@ fun Color_Picker_Selector_Content_View(
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = SpaceBetween
-    ){
+    ) {
         IconButton(
             modifier = Modifier.size(48.dp),
             onClick = { /*TODO*/ }
@@ -262,7 +227,7 @@ fun Color_Picker_Selector_Content_View(
                     .padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
-            ){
+            ) {
                 Spacer(
                     Modifier
                         .fillMaxSize()
@@ -289,10 +254,16 @@ fun Color_Picker_Selector_Content_View(
     }
 
     // Tab Content Row
-    when(viewModel.selectedTabIndex.value){
-        0 -> { Grid_Content_View(viewModel) }
-        1 -> { Spectrum_Content_View(viewModel) }
-        2 -> { Sliders_Content_View(viewModel) }
+    when (viewModel.selectedTabIndex.value) {
+        0 -> {
+            Grid_Content_View(viewModel)
+        }
+        1 -> {
+            Spectrum_Content_View(viewModel)
+        }
+        2 -> {
+            Sliders_Content_View(viewModel)
+        }
     }
 
     // Saved Colors Row
@@ -324,7 +295,7 @@ fun Grid_Content_View(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
-            ){
+            ) {
                 colorRow.forEach { colorAsString ->
                     val color = Color.parse(colorAsString)
                     Spacer(
@@ -346,17 +317,20 @@ fun Spectrum_Content_View(viewModel: COLOR_PICKER_DATA_PROVIDER) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-    ){
-        Spacer(
+            .wrapContentHeight(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
             modifier = Modifier
-                .size(48.dp)
                 .background(
                     color = Color.Red,
                     shape = RoundedCornerShape(8.dp)
                 )
-                .padding(8.dp)
-                .align(Alignment.CenterVertically),
+                .padding(8.dp),
+            text = "WIP",
+            textAlign = TextAlign.Center,
+            fontSize = 64.sp
         )
     }
 }
@@ -373,13 +347,13 @@ fun Sliders_Content_View(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 0.dp, horizontal = 8.dp)
-    ){
+    ) {
         /* Red Slider w/ TextField */
         Row(
             modifier = Modifier.height(60.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = SpaceBetween
-        ){
+        ) {
             Slider(
                 modifier = Modifier.weight(1f, true),
                 value = viewModel.redPosition,
@@ -411,7 +385,7 @@ fun Sliders_Content_View(
                     ),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 TextField(
                     value = viewModel.redTextField,
                     readOnly = viewModel.redReadOnly,
@@ -448,7 +422,7 @@ fun Sliders_Content_View(
             modifier = Modifier.height(60.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = SpaceBetween
-        ){
+        ) {
             Slider(
                 modifier = Modifier.weight(1f, true),
                 value = viewModel.greenPosition,
@@ -475,7 +449,7 @@ fun Sliders_Content_View(
                     ),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 TextField(
                     value = viewModel.greenTextField,
                     readOnly = viewModel.greenReadOnly,
@@ -492,7 +466,8 @@ fun Sliders_Content_View(
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done),
+                        imeAction = ImeAction.Done
+                    ),
                     keyboardActions = KeyboardActions(
                         onDone = {
                             viewModel.updateColorFromTextField(green_code, viewModel.greenTextField)
@@ -508,7 +483,7 @@ fun Sliders_Content_View(
             modifier = Modifier.height(60.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = SpaceBetween
-        ){
+        ) {
             Slider(
                 modifier = Modifier.weight(1f, true),
                 value = viewModel.bluePosition,
@@ -535,7 +510,7 @@ fun Sliders_Content_View(
                     ),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 TextField(
                     value = viewModel.blueTextField,
                     readOnly = viewModel.blueReadOnly,
@@ -573,8 +548,8 @@ fun Sliders_Content_View(
 fun Saved_Colors_Content_View(
     viewModel: COLOR_PICKER_DATA_PROVIDER,
     color: Color,
-){
-    Column{
+) {
+    Column {
         Row(
             modifier = Modifier.padding(start = 16.dp)
         ) {
@@ -590,12 +565,12 @@ fun Saved_Colors_Content_View(
             HorizontalPager(
                 count = viewModel.pageCount,
                 state = viewModel.pagerState
-            ){ pageIndex ->
+            ) { pageIndex ->
                 LazyVerticalGrid(
                     cells = GridCells.Fixed(5),
                     contentPadding = PaddingValues(4.dp)
                 ) {
-                    if (viewModel.colorListToDisplay.value.first().isEmpty()){
+                    if (viewModel.colorListToDisplay.value.first().isEmpty()) {
                         item {
                             IconButton(onClick = { viewModel.updateColorListToDisplay() }) {
                                 Icon(
@@ -604,11 +579,11 @@ fun Saved_Colors_Content_View(
                                 )
                             }
                         }
-                    }
-                    else {
+                    } else {
                         // user has colors saved
                         items(viewModel.colorListToDisplay.value.size) { displayedColorIndex ->
-                            val colorToUse = Color.Companion.parse(viewModel.colorListToDisplay.value[displayedColorIndex])
+                            val colorToUse =
+                                Color.Companion.parse(viewModel.colorListToDisplay.value[displayedColorIndex])
                             IconButton(onClick = { viewModel.setCurrentDisplayColor(colorToUse) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_circle_white),
@@ -617,9 +592,9 @@ fun Saved_Colors_Content_View(
                                 )
                             }
                         }
-                        if(pageIndex + 1 == viewModel.pageCount){
-                            if(viewModel.colorListToDisplay.value.size < COLORS_PER_PAGE){
-                                item{
+                        if (pageIndex + 1 == viewModel.pageCount) {
+                            if (viewModel.colorListToDisplay.value.size < COLORS_PER_PAGE) {
+                                item {
                                     IconButton(onClick = { viewModel.updateColorListToDisplay() }) {
                                         Icon(
                                             painter = painterResource(id = R.drawable.ic_add_circle_white),
@@ -633,7 +608,7 @@ fun Saved_Colors_Content_View(
                 }
             }
         }
-        if(viewModel.pageCount > 1){
+        if (viewModel.pageCount > 1) {
             Row {
                 Spacer(
                     modifier = Modifier.width(48.dp)
@@ -654,13 +629,12 @@ fun Saved_Colors_Content_View(
 }
 
 
-
 @Preview
 @Composable
 @InternalCoroutinesApi
 @ExperimentalPagerApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
-fun ColorPickerPreview(){
+fun ColorPickerPreview() {
     Color_Picker_Content_View(COLOR_PICKER_DATA_PROVIDER())
 }

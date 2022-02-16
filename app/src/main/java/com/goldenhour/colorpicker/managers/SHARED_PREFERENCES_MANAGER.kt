@@ -11,7 +11,9 @@ class SHARED_PREFERENCES_MANAGER {
     lateinit var preferences: SharedPreferences
 
     // TODO Properly init preferences to avoid launch crash
-    fun initializePreferences() {
+    fun initializePreferences(currentPreferences: SharedPreferences) {
+        preferences = currentPreferences
+
         val editor = preferences.edit()
         editor.putStringSet("saved_colors", getSavedColorSet())
         editor.apply()
